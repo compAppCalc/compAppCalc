@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <body>
+
+        <noscript>
+            This page reqeuires JavaScript to function properly as all the calculations are performed on your browser using JavaScript.<br>
+            JavaScript may be unavailable if you are using a very old browser (before 1995) or it may have been disabled.<br>
+        </noscript>
+
+        <select onchange="display(this);">
+            <option hidden disabled selected value>Select Type</option>
+            <optgroup label="Base Conversion">
+                <option value="0">Binary &rarr; Decimal</option>
+                <option value="1">Decimal &rarr; Binary</option>
+                <option value="2">Hexadecimal &rarr; Binary</option>
+                <option value="3">Binary &rarr; Hexadecimal</option>
+                <option value="4">Hexadecimal &rarr; Decimal</option>
+                <option value="5">Decimal &rarr; Hexadecimal</option>
+                <option value="6">Hexadecimal &rarr; Octal</option>
+                <option value="7">Octal &rarr; Binary</option>
+                <option value="8">Binary &rarr; Octal</option>
+                <option value="9">Octal &rarr; Decimal</option>
+                <option value="10">Decimal &rarr; Octal</option>
+            </optgroup>
+            <option value="11">1's Complement</option>
+            <option value="12">2's Complement</option>
+            <option value="13">ASCII Encoding</option>
+            <option value="14">ASCII Decoding</option>
+            <optgroup label="Addition">
+                <option value="15">Octal Addition</option>
+                <option value="16">Hexadecimal Addition</option>
+                <option value="17">Binary Addition</option>
+            </optgroup>
+            <optgroup label="Subtraction">
+                <option value="18">Octal Subtraction</option>
+                <option value="19">Hexadecimal Subtraction</option>
+                <option value="20">Binary Subtraction</option>
+            </optgroup>
+            <option value="21">Binary Multiplication</option>
+            <option value="22">Binary Division</option>
+        </select><br><br>
+
+        <div id="cunt"></div><br>
+
+        <div id="ans"></div> <!-- Calculator goes here -->
+
+        <script type="application/javascript">
+            var input, label;
+            var calc = null;
+            function display(tag) {
+                let i = parseInt(tag.value);
+                tag = tag.parentElement;
+
+                window.label = document.createElement("label"); label["for"] = "inp";
+                window.input = document.createElement("input"); input["id"] = "inp"; input["type"] = "text";
+                if (i<=12)
+                    label.innerText = "Enter number: ";
+                else if (i==13)
+                    label.innerText = "Enter text: ";
+                else if (i==14)
+                    label.innerText = "Enter ASCII codes separated by a space: "
+                else {
+                    label.innerText = "Enter number 1: "
+                    window.inp2 = document.createElement("input"); inp2["id"] = "inp2"; inp2["type"] = "text";
+                    window.lbl2 = document.createElement("label"); lbl2["for"]; lbl2["for"] = "inp2";
+                    lbl2.innerText = "Enter number 2: ";
+                }
+                btn = document.createElement("button"); btn.innerText = "Calculate"; btn["id"] = "btn";
+                let cunt = $("#cunt");
+                cunt.empty();
+                console.log("cleared cunt")
+                cunt.append(window.label);
+                cunt.append(window.input);
+                if (window.lbl2 != undefined) {
+                    cunt.append(document.createElement("br"));
+                    cunt.append(window.lbl2);
+                    cunt.append(window.inp2);
+                }
+                cunt.append(document.createElement("br"));
+                cunt.append(document.createElement("br"));
+                cunt.append(btn);
+
+                $("#btn").click(function () {
+                    console.log("calc() was called." + $("select")[0].value)
+                    switch (parseInt($("select")[0].value)) {
+                        case 0: toDec(2); break;
+                        case 1: dec2bin();
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 5:
+                        case 6:
+                        case 7:
+                        case 8:
+                        case 9:
+                        case 10:
+                        case 11:
+                        case 12:
+                        case 13:
+                        case 14:
+                        case 15:
+                        case 16:
+                        case 17:
+                        case 18:
+                        case 19:
+                        case 20:
+                        case 21:
+                        case 22:
+                    }
+                });
+            }
+
+            function toDec(from) {
+                let val = window.input.value;
+                console.log("toDec was called.")
+                s = val + "<sub>" + from + "</sub><br> = ";
+                let len = val.length;
+                let ss = new Array(len);
+                for (let i=0; i<len; ++i)
+                    ss[i] = val.charAt(i) + "×" + from + "<sup>" + (len-1-i) + "</sup>";
+                s += ss.join(" + ") + '<br> = ';
+                ss = new Array(len);
+                for (let i=0; i<len; ++i)
+                    ss[i] = (parseInt(val.charAt(i), from)*Math.pow(from, len-1-i)).toString();
+                s += ss.join(" + ") + '<br> = ' + parseInt(val, from);
+                console.log(s);
+                $("#ans").html(s);
+            }
+        </script>
+
+    </body>
+
+</html>
